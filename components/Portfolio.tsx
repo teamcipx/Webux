@@ -6,45 +6,45 @@ export const Portfolio: React.FC = () => {
   const projects: Project[] = [
     {
       id: 1,
-      title: "FinTech Dashboard",
-      category: "Web App",
-      image: "https://picsum.photos/800/600?random=1",
-      description: "A real-time financial analytics dashboard with data visualization."
+      title: "AmarShop E-Commerce",
+      category: "Full Stack",
+      image: "https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?auto=format&fit=crop&w=800&q=80",
+      description: "A complete multi-vendor e-commerce platform similar to Daraz with bKash integration."
     },
     {
       id: 2,
-      title: "E-Commerce Lux",
-      category: "E-Commerce",
-      image: "https://picsum.photos/800/600?random=2",
-      description: "Premium shopping experience built on Next.js and Shopify."
+      title: "Sheba Digital Agency",
+      category: "Corporate Site",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+      description: "Modern corporate website for a top marketing agency in Gulshan."
     },
     {
       id: 3,
-      title: "HealthTrack AI",
+      title: "MediCare BD App",
       category: "Mobile App",
-      image: "https://picsum.photos/800/600?random=3",
-      description: "AI-powered health monitoring application for iOS and Android."
+      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
+      description: "Doctor appointment booking and telemedicine app for iOS and Android."
     },
     {
       id: 4,
-      title: "Creative Agency Portfolio",
-      category: "Landing Page",
-      image: "https://picsum.photos/800/600?random=4",
-      description: "Award-winning minimal portfolio design for a digital agency."
+      title: "Dhaka Real Estate",
+      category: "Web Portal",
+      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80",
+      description: "Property listing portal with virtual tours and map integration."
     },
     {
       id: 5,
-      title: "Crypto Exchange",
-      category: "Web3",
-      image: "https://picsum.photos/800/600?random=5",
-      description: "Secure and fast cryptocurrency exchange platform."
+      title: "EduTech LMS",
+      category: "Education",
+      image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80",
+      description: "Learning management system for coaching centers with live class features."
     },
     {
       id: 6,
-      title: "Travel Explorer",
-      category: "Web App",
-      image: "https://picsum.photos/800/600?random=6",
-      description: "Interactive map-based travel planning tool."
+      title: "HungryNaki Redesign",
+      category: "UI/UX Concept",
+      image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+      description: "A modern reimagining of the popular food delivery app interface."
     }
   ];
 
@@ -57,7 +57,7 @@ export const Portfolio: React.FC = () => {
            <div>
              <h2 className="text-base font-semibold text-brand-400 uppercase tracking-wide">Selected Work</h2>
              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl">
-                Our Portfolio
+                Recent Projects
              </p>
            </div>
            <button className="mt-4 md:mt-0 text-brand-400 font-medium hover:text-brand-300 flex items-center transition-colors">

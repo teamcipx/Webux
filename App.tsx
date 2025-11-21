@@ -30,53 +30,56 @@ const App: React.FC = () => {
   const pricingTiers: PricingTier[] = [
     {
       id: 'starter',
-      name: 'Student / Starter',
-      price: '৳5,000',
-      numericPrice: 5000,
-      description: 'Get your professional CV or Portfolio live. Perfect for students and freelancers in BD.',
+      name: 'Personal / Portfolio',
+      price: '৳5,500',
+      numericPrice: 5500,
+      description: 'Ideal for students, influencers, and freelancers to showcase their work professionally.',
       features: [
-        '1-Page Static Portfolio',
-        'Free .xyz Domain (1 Year)',
-        'Mobile Responsive',
-        'Contact Form',
-        'Delivery in 48 Hours'
+        'Modern Single Page Application (SPA)',
+        'Free .xyz or .info Domain (1 Year)',
+        'High-Speed Secure Hosting',
+        'Contact Form with Email Alerts',
+        'Social Media Integration',
+        'Mobile & Tablet Responsive',
+        'Delivery in 3 Days'
       ],
-      buttonText: 'Start Now',
+      buttonText: 'Launch Personal Brand',
       highlighted: false
     },
     {
-      id: 'pro',
-      name: 'Professional',
-      price: '৳15,000',
-      numericPrice: 15000,
-      description: 'Dynamic website with Admin Panel content control. Best for small businesses.',
+      id: 'business',
+      name: 'Business / Corporate',
+      price: '৳18,500',
+      numericPrice: 18500,
+      description: 'Complete digital presence for small businesses and agencies with content control.',
       features: [
-        '5-Page Dynamic Website',
-        'Admin Dashboard (CMS)',
-        'Firebase Database Integration',
-        'User Login System (Basic)',
-        '.com Domain included',
-        'SEO Optimization',
-        '3 Months Support'
+        '5-8 Page Dynamic Website',
+        'Free .com Domain (1 Year)',
+        'Admin Panel (CMS) to Edit Content',
+        'SEO Optimization (Google Ranking)',
+        'WhatsApp Chat Widget',
+        'Google Maps & Analytics Setup',
+        '3 Months Free Maintenance'
       ],
-      buttonText: 'Go Professional',
+      buttonText: 'Grow Your Business',
       highlighted: true
     },
     {
-      id: 'enterprise',
+      id: 'ecommerce',
       name: 'E-Commerce / Custom',
-      price: '৳40,000+',
-      numericPrice: 40000,
-      description: 'Full scale online store or custom web application for your business.',
+      price: '৳45,000+',
+      numericPrice: 45000,
+      description: 'Full-featured online store or custom software for high-scale operations.',
       features: [
-        'Unlimited Pages & Products',
-        'Full Customer Login & Profiles',
-        'bKash/Nagad Payment Gateway',
-        'Advanced Database & API',
-        'Android App (Optional)',
-        'Priority 24/7 Support'
+        'Unlimited Products & Categories',
+        'User Login, Cart & Wishlist',
+        'bKash/Nagad/Card Payment Gateway',
+        'Inventory & Order Management System',
+        'SMS Notification Integration',
+        'High Performance Database',
+        '6 Months Priority Support'
       ],
-      buttonText: 'Contact Sales',
+      buttonText: 'Start Selling Online',
       highlighted: false
     }
   ];

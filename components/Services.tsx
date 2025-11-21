@@ -7,13 +7,13 @@ export const Services: React.FC = () => {
     {
       id: 1,
       title: "Web Development",
-      description: "Custom high-performance websites built with React, Next.js, and Tailwind. Fast, responsive, and SEO-friendly.",
+      description: "High-performance websites built with React, Next.js, and Tailwind. Fast, responsive, and optimized for the Bangladeshi market.",
       icon: <Globe className="w-8 h-8 text-brand-400" />
     },
     {
       id: 2,
       title: "App Development",
-      description: "Native and cross-platform mobile applications that provide seamless user experiences on iOS and Android.",
+      description: "Native and cross-platform mobile applications for iOS and Android that provide seamless user experiences.",
       icon: <Smartphone className="w-8 h-8 text-purple-400" />
     },
     {
@@ -25,19 +25,19 @@ export const Services: React.FC = () => {
     {
       id: 4,
       title: "Backend Solutions",
-      description: "Robust and scalable server-side architectures using Node.js, Python, and cloud infrastructure.",
+      description: "Scalable server architectures using Node.js & Firebase, ready to handle high traffic and secure data.",
       icon: <Database className="w-8 h-8 text-green-400" />
     },
     {
       id: 5,
-      title: "SEO & Marketing",
-      description: "Data-driven strategies to increase your visibility and rank higher on search engines.",
+      title: "SEO & Digital Marketing",
+      description: "Data-driven strategies to rank your business #1 on Google and reach more customers in BD.",
       icon: <Search className="w-8 h-8 text-yellow-400" />
     },
     {
       id: 6,
-      title: "Analytics",
-      description: "Comprehensive insights and tracking to understand user behavior and optimize performance.",
+      title: "Business Analytics",
+      description: "Comprehensive insights and tracking to understand user behavior and optimize your ROI.",
       icon: <BarChart className="w-8 h-8 text-orange-400" />
     }
   ];

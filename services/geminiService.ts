@@ -24,9 +24,9 @@ export const checkDomainAvailability = async (domainName: string): Promise<Domai
     await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate delay
     return [
       { name: domainName, isAvailable: false, price: "N/A", reasoning: "API Key missing. Showing mock data." },
-      { name: `get${domainName}.com`, isAvailable: true, price: "$12.99", reasoning: "Available alternative (Mock)" },
+      { name: `get${domainName}.com`, isAvailable: true, price: "৳1,200", reasoning: "Available alternative (Mock)" },
       { name: `${domainName}tech.bd`, isAvailable: true, price: "৳1,500", reasoning: "Great for local tech (Mock)" },
-      { name: `${domainName}.io`, isAvailable: true, price: "$35.00", reasoning: "Popular for startups (Mock)" },
+      { name: `${domainName}.io`, isAvailable: true, price: "৳3,500", reasoning: "Popular for startups (Mock)" },
     ];
   }
 
@@ -34,14 +34,23 @@ export const checkDomainAvailability = async (domainName: string): Promise<Domai
     const model = "gemini-2.5-flash";
     
     const prompt = `
-      Act as a domain name registrar and branding expert.
-      The user is interested in the domain name: "${domainName}".
-      
-      1. Analyze if this domain is likely premium, taken, or available based on common patterns.
-      2. Suggest 4 creative, modern alternatives relevant to web development, tech, or the specific keywords in the input.
-      3. Assign realistic simulated pricing.
+      Act as a smart domain availability API for the Bangladeshi market.
+      User Query: "${domainName}"
 
-      Return the response in strictly JSON format adhering to the schema.
+      Task:
+      1. Analyze the domain name. If it is a common dictionary word, a famous brand, or very short (3-4 letters), mark 'isAvailable' as false. Otherwise, bias towards true (simulate real availability).
+      2. Generate 5 intelligent alternatives using AI logic:
+         - If user queried .com, suggest .net, .org, .io, or .xyz.
+         - Suggest local domains ending in .bd or .com.bd.
+         - Add smart prefixes (e.g., 'get', 'my', 'go') or suffixes (e.g., 'app', 'tech', 'hub').
+         - Suggest brandable misspellings or synonyms.
+      3. Price in Bangladeshi Taka (৳).
+         - .com ~ ৳1200
+         - .xyz ~ ৳500
+         - .io ~ ৳4500
+         - .bd ~ ৳1500
+
+      Return a JSON array where the first object is the exact query result, and the rest are high-quality suggestions.
     `;
 
     const response = await ai.models.generateContent({
@@ -75,8 +84,7 @@ export const checkDomainAvailability = async (domainName: string): Promise<Domai
     // Fallback mock data in case of API error
     return [
       { name: domainName, isAvailable: false, price: "N/A", reasoning: "Service temporarily unavailable." },
-      { name: `try${domainName}.com`, isAvailable: true, price: "$12.99", reasoning: "Try adding a verb prefix." },
-      { name: `${domainName}app.io`, isAvailable: true, price: "$35.00", reasoning: "Great for tech startups." },
+      { name: `try${domainName}.com`, isAvailable: true, price: "৳1,200", reasoning: "Alternative" },
     ];
   }
 };

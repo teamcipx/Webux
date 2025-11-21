@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Search, Loader2, CheckCircle, XCircle, Sparkles, ArrowRight } from 'lucide-react';
+import { Search, Loader2, CheckCircle, XCircle, Sparkles, ArrowRight, ShoppingCart } from 'lucide-react';
 import { checkDomainAvailability } from '../services/geminiService';
 import { DomainResult } from '../types';
 
@@ -33,7 +33,7 @@ export const DomainChecker: React.FC = () => {
        <div className="absolute -left-20 top-20 w-96 h-96 bg-indigo-600/10 rounded-full blur-[100px]"></div>
        <div className="absolute -right-20 bottom-20 w-96 h-96 bg-brand-600/10 rounded-full blur-[100px]"></div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12">
           <div className="inline-flex items-center space-x-2 bg-brand-900/30 px-4 py-1 rounded-full mb-6 border border-brand-500/30">
              <Sparkles className="w-4 h-4 text-brand-400" />
@@ -43,11 +43,11 @@ export const DomainChecker: React.FC = () => {
             Find Your Perfect Digital Identity
           </h2>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Use our smart search to find available domains, check pricing, and get creative AI suggestions for your brand.
+            Use our smart search to check availability and get creative AI suggestions.
           </p>
         </div>
 
-        <div className="glass-card p-3 rounded-2xl shadow-2xl mb-12">
+        <div className="glass-card p-3 rounded-2xl shadow-2xl mb-12 border border-slate-700/50 bg-slate-900/50 backdrop-blur-xl">
           <form onSubmit={handleCheck} className="flex flex-col sm:flex-row gap-2">
             <div className="relative flex-grow">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -76,39 +76,76 @@ export const DomainChecker: React.FC = () => {
         </div>
 
         {hasSearched && !isLoading && results.length > 0 && (
-          <div className="space-y-4 animate-fade-in-up">
-            {results.map((domain, index) => (
-              <div 
-                key={index}
-                className={`p-6 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all hover:transform hover:scale-[1.01] ${
-                  domain.isAvailable 
-                    ? 'bg-slate-900/80 border-brand-500/30 hover:border-brand-500/50 shadow-[0_0_15px_rgba(139,92,246,0.1)]' 
-                    : 'bg-slate-900/60 border-red-500/20 hover:border-red-500/30 opacity-80'
-                }`}
-              >
-                <div className="flex items-start gap-4">
-                  <div className={`mt-1 p-2 rounded-full ${domain.isAvailable ? 'bg-brand-500/10 text-brand-400' : 'bg-red-500/10 text-red-400'}`}>
-                    {domain.isAvailable ? <CheckCircle className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+          <div className="space-y-8 animate-fade-in-up">
+            
+            {/* Primary Result Card */}
+            <div className={`p-6 rounded-2xl border-2 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden ${
+               results[0].isAvailable 
+               ? 'bg-emerald-900/20 border-emerald-500/50 shadow-emerald-500/10' 
+               : 'bg-red-900/20 border-red-500/50 shadow-red-500/10'
+            }`}>
+               {/* Background glow for card */}
+               <div className={`absolute inset-0 opacity-10 blur-3xl ${results[0].isAvailable ? 'bg-emerald-500' : 'bg-red-500'}`}></div>
+               
+               <div className="flex items-center gap-4 relative z-10">
+                  <div className={`p-4 rounded-full flex items-center justify-center ${results[0].isAvailable ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white'}`}>
+                     {results[0].isAvailable ? <CheckCircle className="w-8 h-8" /> : <XCircle className="w-8 h-8" />}
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white">{domain.name}</h3>
-                    <p className="text-sm text-slate-400 mt-1">{domain.reasoning}</p>
+                     <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight">{results[0].name}</h3>
+                     <p className={`font-medium text-lg ${results[0].isAvailable ? 'text-emerald-400' : 'text-red-400'}`}>
+                        {results[0].isAvailable ? 'Congratulations! This domain is available.' : 'Sorry, this domain is already taken.'}
+                     </p>
+                     {!results[0].isAvailable && <p className="text-slate-400 text-sm mt-1">Don't worry, check out our AI suggestions below.</p>}
                   </div>
-                </div>
-                
-                <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-6 mt-2 sm:mt-0 pl-11 sm:pl-0">
+               </div>
+               
+               <div className="flex flex-col items-end gap-2 relative z-10 w-full md:w-auto">
                   <div className="text-right">
-                    <div className="text-xs text-slate-500 uppercase font-bold tracking-wider">Est. Price</div>
-                    <div className="text-lg font-semibold text-white">{domain.price}</div>
+                     <div className="text-xs text-slate-400 uppercase font-bold tracking-wider">Estimated Price</div>
+                     <div className="text-3xl font-bold text-white">{results[0].price}</div>
                   </div>
-                  {domain.isAvailable && (
-                    <button className="px-4 py-2 bg-brand-600/10 hover:bg-brand-600/20 text-brand-400 border border-brand-500/30 rounded-lg text-sm font-medium transition-colors flex items-center">
-                      Register <ArrowRight className="w-4 h-4 ml-1" />
-                    </button>
+                  {results[0].isAvailable && (
+                     <button className="w-full md:w-auto bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-3 rounded-xl font-bold flex items-center justify-center shadow-lg shadow-emerald-600/20 transition-transform transform hover:-translate-y-0.5">
+                        Register Now <ShoppingCart className="w-4 h-4 ml-2" />
+                     </button>
                   )}
-                </div>
-              </div>
-            ))}
+               </div>
+            </div>
+
+            {/* Suggestions Grid */}
+            {results.length > 1 && (
+               <div>
+                  <div className="flex items-center mb-6">
+                     <div className="h-px flex-1 bg-slate-800"></div>
+                     <h3 className="text-brand-300 font-semibold px-4 flex items-center uppercase tracking-wide text-sm">
+                        <Sparkles className="w-4 h-4 mr-2" />
+                        Smart Alternatives
+                     </h3>
+                     <div className="h-px flex-1 bg-slate-800"></div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                     {results.slice(1).map((domain, index) => (
+                        <div key={index} className="bg-slate-800/40 backdrop-blur-sm border border-slate-700 p-4 rounded-xl hover:border-brand-500/50 hover:bg-slate-800/60 transition-all duration-300 flex items-center justify-between group cursor-pointer">
+                           <div>
+                              <div className="text-lg font-bold text-white group-hover:text-brand-400 transition-colors">{domain.name}</div>
+                              <div className="text-xs text-slate-500 mt-0.5 flex items-center">
+                                 <span className="w-1.5 h-1.5 rounded-full bg-brand-500 mr-1.5"></span>
+                                 {domain.reasoning}
+                              </div>
+                           </div>
+                           <div className="flex items-center gap-4">
+                              <span className="font-bold text-slate-300">{domain.price}</span>
+                              <button className="p-2.5 bg-slate-700 hover:bg-brand-600 rounded-lg text-slate-300 hover:text-white transition-all">
+                                 <ArrowRight className="w-4 h-4" />
+                              </button>
+                           </div>
+                        </div>
+                     ))}
+                  </div>
+               </div>
+            )}
           </div>
         )}
       </div>
