@@ -3,63 +3,11 @@ import { Check, Zap, Crown, Briefcase, Lock } from 'lucide-react';
 import { PricingTier } from '../types';
 
 interface PricingProps {
-  onPlanSelect: (plan: string) => void;
+  onPlanSelect: (planId: string) => void;
+  tiers: PricingTier[];
 }
 
-export const Pricing: React.FC<PricingProps> = ({ onPlanSelect }) => {
-  const tiers: PricingTier[] = [
-    {
-      id: 'starter',
-      name: 'Student / Starter',
-      price: '৳5,000',
-      description: 'Get your professional CV or Portfolio live. Perfect for students and freelancers in BD.',
-      features: [
-        '1-Page Static Portfolio',
-        'Free .xyz Domain (1 Year)',
-        'Mobile Responsive',
-        'Contact Form (Email Forward)',
-        'Limited Support',
-        'Delivery in 48 Hours'
-      ],
-      buttonText: 'Start Now',
-      highlighted: false
-    },
-    {
-      id: 'pro',
-      name: 'Professional',
-      price: '৳15,000',
-      description: 'Dynamic website with Admin Panel content control. Best for small businesses.',
-      features: [
-        '5-Page Dynamic Website',
-        'Admin Dashboard (CMS)',
-        'Firebase Database Integration',
-        'User Login System (Basic)',
-        '.com Domain included',
-        'SEO Optimization (Google Rank)',
-        '3 Months Local Support'
-      ],
-      buttonText: 'Go Professional',
-      highlighted: true
-    },
-    {
-      id: 'enterprise',
-      name: 'E-Commerce / Custom',
-      price: '৳40,000+',
-      description: 'Full scale online store or custom web application for your business.',
-      features: [
-        'Unlimited Pages & Products',
-        'Full Customer Login & Profiles',
-        'bKash/Nagad Payment Gateway',
-        'Inventory Management',
-        'Advanced Database & API',
-        'Android App (Optional Add-on)',
-        'Priority 24/7 Support'
-      ],
-      buttonText: 'Contact Sales',
-      highlighted: false
-    }
-  ];
-
+export const Pricing: React.FC<PricingProps> = ({ onPlanSelect, tiers }) => {
   return (
     <section id="pricing" className="py-24 bg-emerald-950 relative">
       {/* Decorative elements */}
@@ -125,7 +73,7 @@ export const Pricing: React.FC<PricingProps> = ({ onPlanSelect }) => {
               </ul>
 
               <button
-                onClick={() => onPlanSelect(tier.name)}
+                onClick={() => onPlanSelect(tier.id)}
                 className={`w-full py-3 px-4 rounded-xl font-bold transition-all ${
                   tier.highlighted 
                     ? 'bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white shadow-lg' 

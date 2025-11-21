@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Code2, User, LogOut } from 'lucide-react';
+import { Menu, X, Code2, User, LogOut, LayoutDashboard } from 'lucide-react';
 import { NavSection, User as UserType } from '../types';
 
 interface NavbarProps {
@@ -76,22 +76,38 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, scrollToSection, 
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
                   className="flex items-center space-x-2 bg-emerald-900 hover:bg-emerald-800 text-white px-4 py-2 rounded-lg transition-colors border border-emerald-700"
                 >
-                  <User className="w-4 h-4 text-brand-400" />
-                  <span>{user.name}</span>
+                   {user.photoURL ? (
+                      <img src={user.photoURL} alt="User" className="w-5 h-5 rounded-full" />
+                   ) : (
+                      <User className="w-4 h-4 text-brand-400" />
+                   )}
+                  <span>{user.name.split(' ')[0]}</span>
                 </button>
                 
                 {isProfileOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-emerald-900 border border-emerald-700 rounded-xl shadow-xl overflow-hidden">
+                  <div className="absolute right-0 mt-2 w-56 bg-emerald-900 border border-emerald-700 rounded-xl shadow-xl overflow-hidden">
                     <div className="px-4 py-3 border-b border-emerald-800">
                       <p className="text-xs text-emerald-400">Signed in as</p>
                       <p className="text-sm font-medium text-white truncate">{user.email}</p>
                     </div>
+                    
+                    <button
+                      onClick={() => {
+                        scrollToSection(NavSection.DASHBOARD);
+                        setIsProfileOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-3 text-sm text-emerald-100 hover:bg-emerald-800 flex items-center transition-colors"
+                    >
+                       <LayoutDashboard className="w-4 h-4 mr-2 text-brand-400" />
+                       Dashboard
+                    </button>
+
                     <button 
                       onClick={() => {
                         onLogout();
                         setIsProfileOpen(false);
                       }}
-                      className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-emerald-800 flex items-center"
+                      className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-emerald-800 flex items-center border-t border-emerald-800/50"
                     >
                       <LogOut className="w-4 h-4 mr-2" />
                       Sign out
@@ -114,7 +130,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, scrollToSection, 
              {/* Mobile Auth Icon if logged in */}
              {user && (
                 <div className="w-8 h-8 rounded-full bg-brand-900 flex items-center justify-center text-brand-400 font-bold border border-brand-500/30">
-                  {user.name.charAt(0)}
+                  {user.photoURL ? <img src={user.photoURL} className="w-full h-full rounded-full" alt="user" /> : user.name.charAt(0)}
                 </div>
              )}
             <button
@@ -149,16 +165,28 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, scrollToSection, 
             ))}
             <div className="border-t border-emerald-800 mt-4 pt-4 px-3">
               {user ? (
-                 <button
-                  onClick={() => {
-                    onLogout();
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="w-full flex items-center justify-center px-4 py-3 border border-red-500/30 rounded-md text-red-400 bg-red-500/10 hover:bg-red-500/20"
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Sign Out
-                </button>
+                 <div className="space-y-2">
+                    <button
+                      onClick={() => {
+                        scrollToSection(NavSection.DASHBOARD);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="w-full flex items-center px-4 py-3 rounded-md text-emerald-200 hover:bg-emerald-900"
+                    >
+                      <LayoutDashboard className="w-4 h-4 mr-2" />
+                      Dashboard
+                    </button>
+                     <button
+                      onClick={() => {
+                        onLogout();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="w-full flex items-center justify-center px-4 py-3 border border-red-500/30 rounded-md text-red-400 bg-red-500/10 hover:bg-red-500/20"
+                    >
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Sign Out
+                    </button>
+                 </div>
               ) : (
                 <button
                   onClick={() => {

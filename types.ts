@@ -26,6 +26,7 @@ export interface PricingTier {
   id: string;
   name: string;
   price: string;
+  numericPrice: number;
   description: string;
   features: string[];
   highlighted?: boolean;
@@ -36,6 +37,45 @@ export interface User {
   id: string;
   email: string;
   name: string;
+  photoURL?: string;
+  isAdmin?: boolean;
+}
+
+export type OrderStatus = 'pending' | 'approved' | 'in_progress' | 'delivered' | 'completed' | 'cancelled';
+export type PaymentStatus = 'pending' | 'partial' | 'paid';
+
+export interface Order {
+  id: string;
+  userId: string;
+  userEmail: string;
+  userName: string;
+  planName: string;
+  planPrice: number;
+  
+  // User Inputs
+  domainName?: string;
+  requirements?: string;
+  
+  // Payment Info
+  totalAmount: number;
+  paidAmount: number;
+  dueAmount: number;
+  paymentStatus: PaymentStatus;
+  paymentMethod?: string;
+  
+  status: OrderStatus;
+  adminNotes?: string;
+  createdAt: any; // Firestore Timestamp
+}
+
+export interface OrderData {
+  planName: string;
+  planPrice: number;
+  domainName: string;
+  requirements: string;
+  paymentMethod: string;
+  totalAmount: number;
+  paidAmount: number;
 }
 
 export enum NavSection {
@@ -44,5 +84,6 @@ export enum NavSection {
   PORTFOLIO = 'portfolio',
   PRICING = 'pricing',
   DOMAIN = 'domain',
-  CONTACT = 'contact'
+  CONTACT = 'contact',
+  DASHBOARD = 'dashboard'
 }
