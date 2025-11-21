@@ -30,6 +30,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({ isOpen, onClose, selecte
       setDomainStatus('idle');
       setDomainName('');
       setRequirements('');
+      setPaymentMethod('bkash');
     }
   }, [isOpen]);
 
@@ -191,20 +192,13 @@ export const OrderModal: React.FC<OrderModalProps> = ({ isOpen, onClose, selecte
               {/* Payment Method */}
               <div className="space-y-4">
                 <h3 className="text-sm font-medium text-slate-300">Select Payment Method</h3>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1">
                   <button 
                     onClick={() => setPaymentMethod('bkash')}
-                    className={`p-4 rounded-xl border flex flex-col items-center justify-center gap-2 transition-all ${paymentMethod === 'bkash' ? 'bg-pink-600/20 border-pink-500' : 'bg-slate-800 border-slate-700 hover:bg-slate-700'}`}
+                    className="p-4 rounded-xl border flex flex-col items-center justify-center gap-2 transition-all bg-pink-600/20 border-pink-500 w-full"
                   >
-                    <span className="font-bold text-white">bKash</span>
-                    <span className="text-xs text-slate-400">Personal</span>
-                  </button>
-                  <button 
-                    onClick={() => setPaymentMethod('nagad')}
-                    className={`p-4 rounded-xl border flex flex-col items-center justify-center gap-2 transition-all ${paymentMethod === 'nagad' ? 'bg-orange-600/20 border-orange-500' : 'bg-slate-800 border-slate-700 hover:bg-slate-700'}`}
-                  >
-                    <span className="font-bold text-white">Nagad</span>
-                    <span className="text-xs text-slate-400">Personal</span>
+                    <span className="font-bold text-white text-lg">bKash</span>
+                    <span className="text-xs text-slate-400">Send Money (Personal)</span>
                   </button>
                 </div>
                 <div className="bg-slate-800 p-3 rounded-lg flex items-start gap-3 text-xs text-slate-400">
