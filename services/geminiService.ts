@@ -18,39 +18,81 @@ try {
   console.warn("Error initializing Gemini client:", error);
 }
 
+/**
+ * Checks if a domain is available using Google's Public DNS API.
+ * Status 3 (NXDOMAIN) means the domain does not exist, so it is likely available.
+ * Status 0 (NOERROR) means the domain exists (has records), so it is taken.
+ */
+async function checkRealDNS(domain: string): Promise<boolean> {
+  try {
+    // Using Google Public DNS JSON API over HTTPS
+    const response = await fetch(`https://dns.google/resolve?name=${domain}`);
+    const data = await response.json();
+    
+    // Status 3 = NXDOMAIN (Non-Existent Domain) -> Available
+    // Status 0 = NOERROR (Success) -> Taken
+    // Any other status might indicate an error, but usually means taken or reserved.
+    return data.Status === 3;
+  } catch (error) {
+    console.error("Real DNS check failed:", error);
+    // If DNS check fails (e.g. network issue), default to false (Taken) to be safe
+    return false; 
+  }
+}
+
 export const checkDomainAvailability = async (domainName: string): Promise<DomainResult[]> => {
+  // 1. Perform Real DNS Lookup first
+  let isRealAvailable = false;
+  let dnsCheckSuccess = false;
+  
+  try {
+    isRealAvailable = await checkRealDNS(domainName);
+    dnsCheckSuccess = true;
+  } catch (e) {
+    console.warn("Skipping DNS check due to error");
+  }
+
   // Fallback if AI is not initialized
   if (!ai) {
-    await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate delay
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate delay
     return [
-      { name: domainName, isAvailable: false, price: "N/A", reasoning: "API Key missing. Showing mock data." },
+      { 
+        name: domainName, 
+        isAvailable: dnsCheckSuccess ? isRealAvailable : false, 
+        price: isRealAvailable ? "৳1,200" : "N/A", 
+        reasoning: dnsCheckSuccess 
+            ? (isRealAvailable ? "Available (Verified via DNS)" : "Taken (Verified via DNS)") 
+            : "API Key missing. Showing mock data." 
+      },
       { name: `get${domainName}.com`, isAvailable: true, price: "৳1,200", reasoning: "Available alternative (Mock)" },
       { name: `${domainName}tech.bd`, isAvailable: true, price: "৳1,500", reasoning: "Great for local tech (Mock)" },
-      { name: `${domainName}.io`, isAvailable: true, price: "৳3,500", reasoning: "Popular for startups (Mock)" },
+      { name: `${domainName}.xyz`, isAvailable: true, price: "৳500", reasoning: "Budget friendly (Mock)" },
     ];
   }
 
   try {
     const model = "gemini-2.5-flash";
     
+    // 2. Feed the real DNS result into the AI Prompt
     const prompt = `
-      Act as a smart domain availability API for the Bangladeshi market.
+      Act as a professional Domain Registrar API for the Bangladeshi market.
       User Query: "${domainName}"
+      
+      REAL TIME DNS CHECK RESULT: ${dnsCheckSuccess ? (isRealAvailable ? "AVAILABLE (NXDOMAIN)" : "TAKEN (Domain Exists)") : "UNKNOWN (DNS Query Failed)"}
 
-      Task:
-      1. Analyze the domain name. If it is a common dictionary word, a famous brand, or very short (3-4 letters), mark 'isAvailable' as false. Otherwise, bias towards true (simulate real availability).
-      2. Generate 5 intelligent alternatives using AI logic:
-         - If user queried .com, suggest .net, .org, .io, or .xyz.
-         - Suggest local domains ending in .bd or .com.bd.
-         - Add smart prefixes (e.g., 'get', 'my', 'go') or suffixes (e.g., 'app', 'tech', 'hub').
-         - Suggest brandable misspellings or synonyms.
-      3. Price in Bangladeshi Taka (৳).
-         - .com ~ ৳1200
-         - .xyz ~ ৳500
-         - .io ~ ৳4500
-         - .bd ~ ৳1500
+      Instructions:
+      1. The first item in the JSON array MUST be the user's exact query "${domainName}".
+         - isAvailable: Use the REAL TIME DNS CHECK RESULT above. Do not guess.
+         - price: If available, provide realistic market price in BDT (e.g., .com ৳1200, .net ৳1400, .bd ৳1500, .xyz ৳500). If taken, price is "N/A".
+         - reasoning: Explicitly state "Available for registration" or "Already Registered".
 
-      Return a JSON array where the first object is the exact query result, and the rest are high-quality suggestions.
+      2. Generate 4-5 smart, relevant alternatives.
+         - Prioritize .bd, .com.bd, .xyz, .net extensions.
+         - Use creative prefixes (get, my, the, go) or suffixes (bd, app, tech, hub).
+         - Ensure suggestions are likely to be available (avoid very common words).
+         - Price: Realistic BDT (৳) pricing for each.
+
+      Return ONLY a JSON array matching the schema.
     `;
 
     const response = await ai.models.generateContent({
@@ -80,11 +122,16 @@ export const checkDomainAvailability = async (domainName: string): Promise<Domai
     return JSON.parse(jsonText) as DomainResult[];
 
   } catch (error) {
-    console.error("Error checking domain:", error);
-    // Fallback mock data in case of API error
+    console.error("Error processing domain check:", error);
+    // Fallback to just the DNS result if AI fails
     return [
-      { name: domainName, isAvailable: false, price: "N/A", reasoning: "Service temporarily unavailable." },
-      { name: `try${domainName}.com`, isAvailable: true, price: "৳1,200", reasoning: "Alternative" },
+      { 
+        name: domainName, 
+        isAvailable: isRealAvailable, 
+        price: isRealAvailable ? "৳1,200" : "N/A", 
+        reasoning: isRealAvailable ? "Verified by DNS" : "Domain is registered" 
+      },
+      { name: `try-${domainName}.com`, isAvailable: true, price: "৳1,200", reasoning: "Suggestion" }
     ];
   }
 };
