@@ -35,7 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, scrollToSection, 
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-emerald-950/90 backdrop-blur-md shadow-lg border-b border-emerald-800' : 'bg-transparent py-4'
+        isScrolled ? 'bg-[#020617]/90 backdrop-blur-md shadow-lg border-b border-brand-900/50' : 'bg-transparent py-4'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -45,7 +45,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, scrollToSection, 
             className="flex items-center cursor-pointer group"
             onClick={() => scrollToSection(NavSection.HOME)}
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-brand-500/20 transition-all border border-brand-400/20">
+            <div className="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:shadow-brand-500/40 transition-all border border-brand-400/20 transform group-hover:rotate-3">
               <Code2 className="text-white w-5 h-5" />
             </div>
             <span className="ml-3 text-xl font-bold text-white tracking-tight">
@@ -59,10 +59,10 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, scrollToSection, 
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`text-sm font-medium transition-colors duration-200 ${
+                className={`text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 ${
                   activeSection === item.id
                     ? 'text-brand-400'
-                    : 'text-emerald-100/70 hover:text-white'
+                    : 'text-slate-300 hover:text-white'
                 }`}
               >
                 {item.label}
@@ -74,10 +74,10 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, scrollToSection, 
               <div className="relative">
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
-                  className="flex items-center space-x-2 bg-emerald-900 hover:bg-emerald-800 text-white px-4 py-2 rounded-lg transition-colors border border-emerald-700"
+                  className="flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg transition-colors border border-slate-700 hover:border-brand-500/50"
                 >
                    {user.photoURL ? (
-                      <img src={user.photoURL} alt="User" className="w-5 h-5 rounded-full" />
+                      <img src={user.photoURL} alt="User" className="w-5 h-5 rounded-full border border-brand-500/50" />
                    ) : (
                       <User className="w-4 h-4 text-brand-400" />
                    )}
@@ -85,9 +85,9 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, scrollToSection, 
                 </button>
                 
                 {isProfileOpen && (
-                  <div className="absolute right-0 mt-2 w-56 bg-emerald-900 border border-emerald-700 rounded-xl shadow-xl overflow-hidden">
-                    <div className="px-4 py-3 border-b border-emerald-800">
-                      <p className="text-xs text-emerald-400">Signed in as</p>
+                  <div className="absolute right-0 mt-2 w-56 bg-slate-900 border border-slate-700 rounded-xl shadow-xl overflow-hidden ring-1 ring-brand-500/20">
+                    <div className="px-4 py-3 border-b border-slate-800 bg-slate-900/50">
+                      <p className="text-xs text-brand-400">Signed in as</p>
                       <p className="text-sm font-medium text-white truncate">{user.email}</p>
                     </div>
                     
@@ -96,9 +96,9 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, scrollToSection, 
                         scrollToSection(NavSection.DASHBOARD);
                         setIsProfileOpen(false);
                       }}
-                      className="w-full text-left px-4 py-3 text-sm text-emerald-100 hover:bg-emerald-800 flex items-center transition-colors"
+                      className="w-full text-left px-4 py-3 text-sm text-slate-200 hover:bg-slate-800 flex items-center transition-colors hover:text-brand-400"
                     >
-                       <LayoutDashboard className="w-4 h-4 mr-2 text-brand-400" />
+                       <LayoutDashboard className="w-4 h-4 mr-2 text-brand-500" />
                        Dashboard
                     </button>
 
@@ -107,7 +107,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, scrollToSection, 
                         onLogout();
                         setIsProfileOpen(false);
                       }}
-                      className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-emerald-800 flex items-center border-t border-emerald-800/50"
+                      className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-slate-800 flex items-center border-t border-slate-800/50"
                     >
                       <LogOut className="w-4 h-4 mr-2" />
                       Sign out
@@ -118,7 +118,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, scrollToSection, 
             ) : (
               <button
                 onClick={onLoginClick}
-                className="px-5 py-2 bg-brand-600 hover:bg-brand-500 text-white rounded-lg font-medium shadow-lg shadow-brand-500/20 transition-all transform hover:scale-105"
+                className="px-5 py-2 bg-brand-600 hover:bg-brand-500 text-white rounded-lg font-medium shadow-lg shadow-brand-500/20 transition-all transform hover:scale-105 hover:-translate-y-0.5"
               >
                 Login
               </button>
@@ -135,7 +135,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, scrollToSection, 
              )}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-emerald-100 hover:text-white p-2"
+              className="text-slate-300 hover:text-white p-2"
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -145,7 +145,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, scrollToSection, 
 
       {/* Mobile Dropdown */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-emerald-950 border-b border-emerald-800 shadow-2xl">
+        <div className="lg:hidden bg-slate-950 border-b border-slate-800 shadow-2xl">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navItems.map((item) => (
               <button
@@ -156,14 +156,14 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, scrollToSection, 
                 }}
                 className={`block w-full text-left px-3 py-3 rounded-md text-base font-medium ${
                   activeSection === item.id
-                    ? 'text-white bg-brand-900/30'
-                    : 'text-emerald-200 hover:text-white hover:bg-emerald-900'
+                    ? 'text-white bg-brand-900/30 border-l-2 border-brand-500'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-900'
                 }`}
               >
                 {item.label}
               </button>
             ))}
-            <div className="border-t border-emerald-800 mt-4 pt-4 px-3">
+            <div className="border-t border-slate-800 mt-4 pt-4 px-3">
               {user ? (
                  <div className="space-y-2">
                     <button
@@ -171,9 +171,9 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, scrollToSection, 
                         scrollToSection(NavSection.DASHBOARD);
                         setIsMobileMenuOpen(false);
                       }}
-                      className="w-full flex items-center px-4 py-3 rounded-md text-emerald-200 hover:bg-emerald-900"
+                      className="w-full flex items-center px-4 py-3 rounded-md text-slate-200 hover:bg-slate-900"
                     >
-                      <LayoutDashboard className="w-4 h-4 mr-2" />
+                      <LayoutDashboard className="w-4 h-4 mr-2 text-brand-400" />
                       Dashboard
                     </button>
                      <button

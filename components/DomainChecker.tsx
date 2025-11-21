@@ -28,14 +28,14 @@ export const DomainChecker: React.FC = () => {
   }, [query]);
 
   return (
-    <section id="domain" className="py-24 bg-slate-800 relative overflow-hidden">
+    <section id="domain" className="py-24 bg-slate-900 relative overflow-hidden">
        {/* Background effects */}
-       <div className="absolute -left-20 top-20 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl"></div>
-       <div className="absolute -right-20 bottom-20 w-96 h-96 bg-brand-600/10 rounded-full blur-3xl"></div>
+       <div className="absolute -left-20 top-20 w-96 h-96 bg-indigo-600/10 rounded-full blur-[100px]"></div>
+       <div className="absolute -right-20 bottom-20 w-96 h-96 bg-brand-600/10 rounded-full blur-[100px]"></div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12">
-          <div className="inline-flex items-center space-x-2 bg-brand-900/50 px-4 py-1 rounded-full mb-6 border border-brand-500/30">
+          <div className="inline-flex items-center space-x-2 bg-brand-900/30 px-4 py-1 rounded-full mb-6 border border-brand-500/30">
              <Sparkles className="w-4 h-4 text-brand-400" />
              <span className="text-sm font-medium text-brand-200">AI-Powered Discovery</span>
           </div>
@@ -47,24 +47,24 @@ export const DomainChecker: React.FC = () => {
           </p>
         </div>
 
-        <div className="bg-slate-900/80 backdrop-blur-xl p-2 rounded-2xl shadow-2xl border border-slate-700 mb-12">
+        <div className="glass-card p-3 rounded-2xl shadow-2xl mb-12">
           <form onSubmit={handleCheck} className="flex flex-col sm:flex-row gap-2">
             <div className="relative flex-grow">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <Search className="h-5 w-5 text-slate-500" />
+                <Search className="h-5 w-5 text-slate-400" />
               </div>
               <input
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="block w-full pl-11 pr-4 py-4 bg-transparent border-none text-white placeholder-slate-500 focus:ring-0 text-lg"
+                className="block w-full pl-11 pr-4 py-4 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-transparent text-lg transition-all"
                 placeholder="Enter your dream domain (e.g., startuphub.com)"
               />
             </div>
             <button
               type="submit"
               disabled={isLoading || !query}
-              className="px-8 py-4 bg-brand-600 hover:bg-brand-500 disabled:bg-slate-700 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-all flex items-center justify-center sm:w-auto w-full"
+              className="px-8 py-4 bg-brand-600 hover:bg-brand-500 disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed text-white font-bold rounded-xl transition-all flex items-center justify-center sm:w-auto w-full shadow-lg shadow-brand-600/20"
             >
               {isLoading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -80,14 +80,14 @@ export const DomainChecker: React.FC = () => {
             {results.map((domain, index) => (
               <div 
                 key={index}
-                className={`p-6 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all ${
+                className={`p-6 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all hover:transform hover:scale-[1.01] ${
                   domain.isAvailable 
-                    ? 'bg-slate-900/60 border-emerald-500/30 hover:border-emerald-500/50' 
-                    : 'bg-slate-900/40 border-red-500/20 hover:border-red-500/30 opacity-80'
+                    ? 'bg-slate-900/80 border-brand-500/30 hover:border-brand-500/50 shadow-[0_0_15px_rgba(139,92,246,0.1)]' 
+                    : 'bg-slate-900/60 border-red-500/20 hover:border-red-500/30 opacity-80'
                 }`}
               >
                 <div className="flex items-start gap-4">
-                  <div className={`mt-1 p-2 rounded-full ${domain.isAvailable ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'}`}>
+                  <div className={`mt-1 p-2 rounded-full ${domain.isAvailable ? 'bg-brand-500/10 text-brand-400' : 'bg-red-500/10 text-red-400'}`}>
                     {domain.isAvailable ? <CheckCircle className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
                   </div>
                   <div>
@@ -98,11 +98,11 @@ export const DomainChecker: React.FC = () => {
                 
                 <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-6 mt-2 sm:mt-0 pl-11 sm:pl-0">
                   <div className="text-right">
-                    <div className="text-sm text-slate-500 uppercase font-medium tracking-wider">Price</div>
+                    <div className="text-xs text-slate-500 uppercase font-bold tracking-wider">Est. Price</div>
                     <div className="text-lg font-semibold text-white">{domain.price}</div>
                   </div>
                   {domain.isAvailable && (
-                    <button className="px-4 py-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 rounded-lg text-sm font-medium transition-colors flex items-center">
+                    <button className="px-4 py-2 bg-brand-600/10 hover:bg-brand-600/20 text-brand-400 border border-brand-500/30 rounded-lg text-sm font-medium transition-colors flex items-center">
                       Register <ArrowRight className="w-4 h-4 ml-1" />
                     </button>
                   )}
@@ -111,8 +111,6 @@ export const DomainChecker: React.FC = () => {
             ))}
           </div>
         )}
-        
-        {/* Empty state or initial helper text could go here */}
       </div>
     </section>
   );

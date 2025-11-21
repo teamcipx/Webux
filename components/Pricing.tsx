@@ -9,9 +9,10 @@ interface PricingProps {
 
 export const Pricing: React.FC<PricingProps> = ({ onPlanSelect, tiers }) => {
   return (
-    <section id="pricing" className="py-24 bg-emerald-950 relative">
+    <section id="pricing" className="py-24 bg-[#0f0529] relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-brand-600/10 rounded-full blur-3xl"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-brand-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute inset-0 cyber-grid opacity-10 pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
@@ -19,7 +20,7 @@ export const Pricing: React.FC<PricingProps> = ({ onPlanSelect, tiers }) => {
           <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl">
             Control Your Features via Price
           </p>
-          <p className="mt-4 max-w-2xl text-xl text-emerald-100/60 mx-auto">
+          <p className="mt-4 max-w-2xl text-xl text-slate-400 mx-auto">
             Unlock advanced features like Databases, User Login, and Admin Panels by selecting a higher tier.
           </p>
         </div>
@@ -30,42 +31,42 @@ export const Pricing: React.FC<PricingProps> = ({ onPlanSelect, tiers }) => {
               key={tier.id}
               className={`relative rounded-2xl p-8 flex flex-col h-full transition-all duration-300 ${
                 tier.highlighted 
-                  ? 'bg-emerald-900 border-2 border-brand-500 shadow-2xl shadow-brand-500/20 transform md:-translate-y-4' 
-                  : 'bg-emerald-900/40 border border-emerald-800 hover:border-emerald-700'
+                  ? 'bg-slate-900/80 backdrop-blur-md border-2 border-brand-500 shadow-[0_0_40px_rgba(139,92,246,0.15)] transform md:-translate-y-4 z-10' 
+                  : 'bg-slate-900/40 backdrop-blur-sm border border-slate-800 hover:border-slate-700'
               }`}
             >
               {tier.highlighted && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-brand-500 to-emerald-600 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg">
-                  Best Value
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-brand-500 to-purple-600 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg">
+                  Most Popular
                 </div>
               )}
 
               <div className="mb-6">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
-                  tier.highlighted ? 'bg-brand-500 text-white' : 'bg-emerald-800 text-emerald-200'
+                <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 shadow-lg ${
+                  tier.highlighted ? 'bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-brand-500/30' : 'bg-slate-800 text-slate-300 border border-slate-700'
                 }`}>
-                  {tier.id === 'starter' && <Briefcase className="w-6 h-6" />}
-                  {tier.id === 'pro' && <Zap className="w-6 h-6" />}
-                  {tier.id === 'enterprise' && <Crown className="w-6 h-6" />}
+                  {tier.id === 'starter' && <Briefcase className="w-7 h-7" />}
+                  {tier.id === 'pro' && <Zap className="w-7 h-7" />}
+                  {tier.id === 'enterprise' && <Crown className="w-7 h-7" />}
                 </div>
                 <h3 className="text-xl font-bold text-white">{tier.name}</h3>
-                <p className="text-emerald-100/60 mt-2 text-sm">{tier.description}</p>
+                <p className="text-slate-400 mt-2 text-sm">{tier.description}</p>
               </div>
 
               <div className="mb-8">
                 <span className="text-4xl font-extrabold text-white">{tier.price}</span>
-                {tier.price.includes('+') ? <span className="text-emerald-400/60 ml-2 text-sm">starting</span> : <span className="text-emerald-400/60 ml-2 text-sm">one-time</span>}
+                {tier.price.includes('+') ? <span className="text-slate-500 ml-2 text-sm">starting</span> : <span className="text-slate-500 ml-2 text-sm">one-time</span>}
               </div>
 
               <ul className="space-y-4 mb-8 flex-grow">
                 {tier.features.map((feature, index) => (
                   <li key={index} className="flex items-start">
-                    <Check className={`w-5 h-5 mr-3 flex-shrink-0 ${tier.highlighted ? 'text-brand-400' : 'text-emerald-600'}`} />
-                    <span className="text-emerald-100/80 text-sm">{feature}</span>
+                    <Check className={`w-5 h-5 mr-3 flex-shrink-0 ${tier.highlighted ? 'text-brand-400' : 'text-slate-500'}`} />
+                    <span className="text-slate-300 text-sm">{feature}</span>
                   </li>
                 ))}
                 {tier.id === 'starter' && (
-                    <li className="flex items-start text-emerald-800">
+                    <li className="flex items-start text-slate-600">
                         <Lock className="w-4 h-4 mr-3 mt-1 flex-shrink-0" />
                         <span className="text-sm">Database & Login Locked</span>
                     </li>
@@ -76,8 +77,8 @@ export const Pricing: React.FC<PricingProps> = ({ onPlanSelect, tiers }) => {
                 onClick={() => onPlanSelect(tier.id)}
                 className={`w-full py-3 px-4 rounded-xl font-bold transition-all ${
                   tier.highlighted 
-                    ? 'bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white shadow-lg' 
-                    : 'bg-emerald-800 hover:bg-emerald-700 text-white border border-emerald-700'
+                    ? 'bg-brand-600 hover:bg-brand-500 text-white shadow-lg shadow-brand-600/25' 
+                    : 'bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 hover:border-slate-600'
                 }`}
               >
                 {tier.buttonText}
