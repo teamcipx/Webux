@@ -51,6 +51,7 @@ export interface Order {
   userName: string;
   planName: string;
   planPrice: number;
+  planFeatures?: string[]; // Added features for Agreement Scope
   
   // User Inputs
   domainName?: string;
@@ -71,6 +72,7 @@ export interface Order {
 export interface OrderData {
   planName: string;
   planPrice: number;
+  planFeatures: string[];
   domainName: string;
   requirements: string;
   paymentMethod: string;

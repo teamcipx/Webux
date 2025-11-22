@@ -21,6 +21,7 @@ export const createOrder = async (user: User, orderData: OrderData) => {
       
       planName: orderData.planName,
       planPrice: orderData.planPrice,
+      planFeatures: orderData.planFeatures || [],
       domainName: orderData.domainName,
       requirements: orderData.requirements,
       
