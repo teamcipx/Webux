@@ -83,7 +83,6 @@ export enum NavSection {
   SERVICES = 'services',
   PORTFOLIO = 'portfolio',
   PRICING = 'pricing',
-  DOMAIN = 'domain',
   CONTACT = 'contact',
   DASHBOARD = 'dashboard'
 }

@@ -44,7 +44,6 @@ export const Footer: React.FC = () => {
             <ul className="space-y-4">
               <li><a href="#services" className="text-slate-400 hover:text-brand-400 transition-colors flex items-center group"><span className="w-1.5 h-1.5 bg-brand-500 rounded-full mr-2 group-hover:scale-150 transition-transform"></span>Web Development</a></li>
               <li><a href="#services" className="text-slate-400 hover:text-brand-400 transition-colors flex items-center group"><span className="w-1.5 h-1.5 bg-brand-500 rounded-full mr-2 group-hover:scale-150 transition-transform"></span>App Development</a></li>
-              <li><a href="#domain" className="text-slate-400 hover:text-brand-400 transition-colors flex items-center group"><span className="w-1.5 h-1.5 bg-brand-500 rounded-full mr-2 group-hover:scale-150 transition-transform"></span>Domain Registration</a></li>
               <li><a href="#pricing" className="text-slate-400 hover:text-brand-400 transition-colors flex items-center group"><span className="w-1.5 h-1.5 bg-brand-500 rounded-full mr-2 group-hover:scale-150 transition-transform"></span>UI/UX Design</a></li>
               <li><a href="#" className="text-slate-400 hover:text-brand-400 transition-colors flex items-center group"><span className="w-1.5 h-1.5 bg-brand-500 rounded-full mr-2 group-hover:scale-150 transition-transform"></span>SEO Optimization</a></li>
             </ul>

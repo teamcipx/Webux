@@ -5,7 +5,7 @@ import {
   Loader2, Package, User as UserIcon, CheckCircle, 
   Clock, DollarSign, ChevronDown, ChevronUp, 
   PlayCircle, Search, Filter, ArrowLeft, ArrowRight,
-  CheckSquare, Square, X, TrendingUp, Activity
+  CheckSquare, Square, X, TrendingUp, Activity, Shield
 } from 'lucide-react';
 
 interface AdminDashboardProps {
@@ -31,12 +31,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
 
   const fetchOrders = async () => {
     setIsLoading(true);
-    const data = await getOrders();
-    if (user.isAdmin) {
-        setOrders(data);
-    } else {
-        setOrders(data.filter(o => o.userId === user.id));
-    }
+    // Now using server-side security via the service
+    const data = await getOrders(user.id, user.isAdmin);
+    setOrders(data);
     setIsLoading(false);
   };
 
@@ -115,7 +112,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
     setIsBulkActionLoading(true);
     try {
       await Promise.all(
-        Array.from(selectedOrderIds).map(id => updateOrderStatus(id, { status }))
+        // Fix: Explicitly type id as string because Array.from on Set might infer unknown type for map callback argument
+        Array.from(selectedOrderIds).map((id) => updateOrderStatus(id as string, { status }))
       );
       setSelectedOrderIds(new Set());
       await fetchOrders();
@@ -152,7 +150,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-white">{user.isAdmin ? 'Admin Console' : 'Project Dashboard'}</h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-3xl font-bold text-white">{user.isAdmin ? 'Admin Console' : 'Project Dashboard'}</h1>
+              {user.isAdmin && (
+                <span className="flex items-center px-2 py-0.5 rounded text-xs font-bold bg-brand-500/20 text-brand-400 border border-brand-500/30">
+                  <Shield className="w-3 h-3 mr-1" /> Secure Mode
+                </span>
+              )}
+            </div>
             <p className="text-slate-400 mt-2">
                 {user.isAdmin ? 'Oversee orders, manage workflow, and track revenue.' : 'Track the progress of your digital products.'}
             </p>

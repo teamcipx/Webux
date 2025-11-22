@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { X, Check, ArrowRight, CreditCard, ShieldCheck, Globe, Loader2, AlertCircle } from 'lucide-react';
+import { X, ArrowRight, ShieldCheck, Globe, Loader2 } from 'lucide-react';
 import { PricingTier, User, OrderData } from '../types';
-import { checkDomainAvailability } from '../services/geminiService';
 
 interface OrderModalProps {
   isOpen: boolean;
@@ -20,14 +19,9 @@ export const OrderModal: React.FC<OrderModalProps> = ({ isOpen, onClose, selecte
   const [requirements, setRequirements] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('bkash');
   
-  // Domain Check State
-  const [isCheckingDomain, setIsCheckingDomain] = useState(false);
-  const [domainStatus, setDomainStatus] = useState<'idle' | 'available' | 'unavailable'>('idle');
-
   useEffect(() => {
     if (isOpen) {
       setStep(1);
-      setDomainStatus('idle');
       setDomainName('');
       setRequirements('');
       setPaymentMethod('bkash');
@@ -38,25 +32,6 @@ export const OrderModal: React.FC<OrderModalProps> = ({ isOpen, onClose, selecte
 
   const totalAmount = selectedPlan.numericPrice;
   const advanceAmount = totalAmount * 0.5; // 50% Advance
-
-  const handleCheckDomain = async () => {
-    if (!domainName) return;
-    setIsCheckingDomain(true);
-    try {
-      const results = await checkDomainAvailability(domainName);
-      // Simple check: if the first result matches and says available
-      const exactMatch = results.find(r => r.name.toLowerCase() === domainName.toLowerCase());
-      if (exactMatch && exactMatch.isAvailable) {
-        setDomainStatus('available');
-      } else {
-        setDomainStatus('unavailable');
-      }
-    } catch (e) {
-      setDomainStatus('idle');
-    } finally {
-      setIsCheckingDomain(false);
-    }
-  };
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -113,41 +88,18 @@ export const OrderModal: React.FC<OrderModalProps> = ({ isOpen, onClose, selecte
 
               {/* Domain Section */}
               <div className="space-y-3">
-                <label className="block text-sm font-medium text-slate-300">Domain Selection</label>
-                <div className="flex gap-2">
-                  <div className="relative flex-grow">
-                    <Globe className="absolute left-3 top-3.5 w-5 h-5 text-slate-500" />
-                    <input 
-                      type="text" 
-                      value={domainName}
-                      onChange={(e) => {
-                        setDomainName(e.target.value);
-                        setDomainStatus('idle');
-                      }}
-                      placeholder="e.g. mybusiness.com"
-                      className="w-full bg-slate-800 border border-slate-700 rounded-xl py-3 pl-10 pr-4 text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                    />
-                  </div>
-                  <button 
-                    onClick={handleCheckDomain}
-                    disabled={isCheckingDomain || !domainName}
-                    className="bg-slate-800 hover:bg-slate-700 text-white px-4 rounded-xl border border-slate-700 font-medium transition-colors"
-                  >
-                    {isCheckingDomain ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Check'}
-                  </button>
+                <label className="block text-sm font-medium text-slate-300">Domain Name</label>
+                <div className="relative flex-grow">
+                  <Globe className="absolute left-3 top-3.5 w-5 h-5 text-slate-500" />
+                  <input 
+                    type="text" 
+                    value={domainName}
+                    onChange={(e) => setDomainName(e.target.value)}
+                    placeholder="e.g. mybusiness.com (Required)"
+                    className="w-full bg-slate-800 border border-slate-700 rounded-xl py-3 pl-10 pr-4 text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                  />
                 </div>
-                
-                {domainStatus === 'available' && (
-                  <div className="flex items-center text-emerald-400 text-sm bg-emerald-500/10 p-2 rounded-lg">
-                    <Check className="w-4 h-4 mr-2" /> Domain is likely available!
-                  </div>
-                )}
-                {domainStatus === 'unavailable' && (
-                  <div className="flex items-center text-red-400 text-sm bg-red-500/10 p-2 rounded-lg">
-                    <AlertCircle className="w-4 h-4 mr-2" /> Domain might be taken. We can suggest alternatives later.
-                  </div>
-                )}
-                <p className="text-xs text-slate-500">If you already own a domain, enter it above.</p>
+                <p className="text-xs text-slate-500">Enter the domain you want to register or connect.</p>
               </div>
 
               {/* Requirements */}

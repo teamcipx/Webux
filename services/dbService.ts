@@ -6,6 +6,7 @@ import {
   updateDoc,
   query, 
   orderBy, 
+  where,
   serverTimestamp 
 } from "firebase/firestore";
 import { db } from './firebase';
@@ -39,9 +40,24 @@ export const createOrder = async (user: User, orderData: OrderData) => {
   }
 };
 
-export const getOrders = async (): Promise<Order[]> => {
+export const getOrders = async (userId: string, isAdmin: boolean = false): Promise<Order[]> => {
   try {
-    const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
+    let q;
+    
+    if (isAdmin) {
+      // Admin fetches ALL orders
+      q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
+    } else {
+      // Regular user fetches ONLY their orders
+      // Note: This composite query (userId + createdAt) requires a Firestore Index.
+      // If it fails in console, follow the link provided by Firebase to create the index.
+      q = query(
+        collection(db, "orders"), 
+        where("userId", "==", userId),
+        orderBy("createdAt", "desc")
+      );
+    }
+
     const querySnapshot = await getDocs(q);
     
     const orders: Order[] = [];
