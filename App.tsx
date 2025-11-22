@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { About } from './components/About';
 import { Services } from './components/Services';
 import { Portfolio } from './components/Portfolio';
 import { Pricing } from './components/Pricing';
@@ -25,79 +26,92 @@ const App: React.FC = () => {
   const [pendingPlanId, setPendingPlanId] = useState<string | null>(null);
   const [selectedTier, setSelectedTier] = useState<PricingTier | null>(null);
 
-  // Define Pricing Tiers Data Accessible globally for selection logic
+  // Define Pricing Tiers Data based on user requirements
   const pricingTiers: PricingTier[] = [
     {
       id: 'basic',
       name: 'BASIC PACKAGE',
-      price: '৳500',
+      price: '500/-',
       numericPrice: 500,
       description: 'Best Budget Package to start.',
       features: [
+        'Hosting & Fast Server',
         '.xyz / .site / .shop Domain',
-        'Fast Hosting (Mobile Responsive)',
-        'Medium Design & Basic SEO',
+        'Medium Design & 2 Times Revision',
+        'SSL Certificate',
         'Admin Panel v1',
-        'SSL Certificate & Security',
-        'Custom Theme & Font (Basic)',
-        '2 Times Revision'
+        'Basic SEO',
+        'Custom Theme & Font Basic',
+        'Mobile Responsive Design',
+        'Basic Security Setup'
       ],
       buttonText: 'Start Basic',
-      highlighted: false
+      highlighted: false,
+      color: 'emerald'
     },
     {
       id: 'standard',
       name: 'STANDARD PACKAGE',
-      price: '৳1,500',
+      price: '1,500/-',
       numericPrice: 1500,
-      description: 'Perfect for Growing Businesses.',
+      description: 'For Growing Businesses.',
       features: [
-        'Free .com Domain',
-        'Premium UI Design',
-        'Admin Panel v2 + Blog System',
-        'AI Chat Support Widget',
-        'Course / Digital Asset System',
+        '.com Domain',
+        'Fast Cloud Hosting',
+        'Premium UI Design & 4 Times Revision',
+        'SSL & Admin Panel v2',
         'Advanced SEO & Google Rank',
-        '4 Times Revision'
+        'ChatGPT + AI Tools Connect',
+        'AI Support Chat Support In web',
+        'Blog & Course / Digital Asset System',
+        'Social Media & Analytics Setup'
       ],
       buttonText: 'Go Standard',
-      highlighted: true
+      highlighted: true,
+      color: 'yellow'
     },
     {
       id: 'premium',
       name: 'PREMIUM PACKAGE',
-      price: '৳3,000',
+      price: '3,000/-',
       numericPrice: 3000,
       description: 'Professional & High-Performance.',
       features: [
+        '.com Domain & Premium Hosting',
         '3–5 Page Premium UI/UX',
-        'SSD NVMe Hosting (Super Fast)',
-        'Admin Panel v3 (Advanced)',
-        'Payment Gateway Setup',
+        'Unlimited Revision (Fair Use)',
+        'SSL + Full Security & Admin Panel v3',
+        'Full SEO + Google Rank Strategy',
         'AI Chatbot + Auto Reply',
-        'Google Business Setup',
-        'Unlimited Revision (Fair Use)'
+        'Blog + Course + Shop System',
+        'Google Business & Newsletter Setup',
+        'Payment Gateway Setup'
       ],
       buttonText: 'Go Premium',
-      highlighted: false
+      highlighted: false,
+      color: 'blue'
     },
     {
       id: 'ultimate',
       name: 'ULTIMATE PACKAGE',
-      price: '৳5,000',
+      price: '5,000/-',
       numericPrice: 5000,
       description: 'Full Business + Automation + AI Powered.',
       features: [
+        '.com Premium Domain & VIP Hosting',
         'Pro-Level UI/UX + Branding',
-        'Enterprise Security & VIP Hosting',
-        'Admin Panel v4 (Dashboard)',
-        'CRM, Leads & Email Automation',
-        'Payment (bKash, Nagad, Stripe)',
+        'Unlimited Revision (Full)',
+        'Enterprise Security & Admin Panel v4',
         'Full SEO (On page + Technical)',
+        'AI Chatbot Custom Training',
+        'Multi Blog + Shop + Course System',
+        'CRM, Leads & Email Automation',
+        'Payment Gateway (bKash, Nagad, Stripe)',
         'Multi-User Admin Roles'
       ],
       buttonText: 'Get Ultimate',
-      highlighted: true
+      highlighted: true,
+      color: 'red'
     }
   ];
 
@@ -212,6 +226,7 @@ const App: React.FC = () => {
         ) : (
           <>
             <Hero scrollToSection={scrollToSection} />
+            <About />
             <Services />
             <Pricing onPlanSelect={handlePlanSelect} tiers={pricingTiers} />
             <Portfolio />

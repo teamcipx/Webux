@@ -25,6 +25,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, scrollToSection, 
 
   const navItems = [
     { id: NavSection.HOME, label: 'Home' },
+    { id: NavSection.ABOUT, label: 'About' },
     { id: NavSection.SERVICES, label: 'Services' },
     { id: NavSection.PORTFOLIO, label: 'Portfolio' },
     { id: NavSection.PRICING, label: 'Pricing' },

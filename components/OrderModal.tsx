@@ -49,12 +49,9 @@ export const OrderModal: React.FC<OrderModalProps> = ({ isOpen, onClose, selecte
         paidAmount: advanceAmount, // Simulating 50% payment success
       };
       
-      // We wrap the onSubmit to capture the order creation logic
-      // In a real app, createOrder should return the ID. 
-      // Assuming the parent component's onSubmit handles creation and we simulate ID generation for UI.
       await onSubmit(orderData);
       
-      setOrderId('ORD-' + Math.floor(Math.random() * 10000)); // Simulated ID for immediate UI feedback
+      setOrderId('ORD-' + Math.floor(Math.random() * 100000)); // Simulated ID for immediate UI feedback
       setStep(3); // Go to Success Step
     } catch (error) {
       console.error(error);
@@ -64,7 +61,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({ isOpen, onClose, selecte
   };
 
   const handleWhatsAppClick = () => {
-    const message = `Hello, I just placed Order #${orderId || 'NEW'}. I have paid the 50% advance. Can we discuss the design preview?`;
+    const message = `Hello WebUX BD! \n\nI have placed Order #${orderId || 'NEW'}.\nPlan: ${selectedPlan.name}\nDomain: ${domainName}\n\nI have paid the 50% advance via bKash. I am ready to discuss the design preview.`;
     window.open(`https://wa.me/8801711000000?text=${encodeURIComponent(message)}`, '_blank');
     onClose();
   };

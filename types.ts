@@ -31,6 +31,7 @@ export interface PricingTier {
   features: string[];
   highlighted?: boolean;
   buttonText: string;
+  color?: string; // Added color for styling differentiation
 }
 
 export interface User {
@@ -51,7 +52,7 @@ export interface Order {
   userName: string;
   planName: string;
   planPrice: number;
-  planFeatures?: string[]; // Added features for Agreement Scope
+  planFeatures?: string[];
   
   // User Inputs
   domainName?: string;
@@ -82,6 +83,7 @@ export interface OrderData {
 
 export enum NavSection {
   HOME = 'home',
+  ABOUT = 'about',
   SERVICES = 'services',
   PORTFOLIO = 'portfolio',
   PRICING = 'pricing',
