@@ -28,58 +28,76 @@ const App: React.FC = () => {
   // Define Pricing Tiers Data Accessible globally for selection logic
   const pricingTiers: PricingTier[] = [
     {
-      id: 'starter',
-      name: 'Personal / Portfolio',
-      price: '৳5,500',
-      numericPrice: 5500,
-      description: 'Ideal for students, influencers, and freelancers to showcase their work professionally.',
+      id: 'basic',
+      name: 'BASIC PACKAGE',
+      price: '৳500',
+      numericPrice: 500,
+      description: 'Best Budget Package to start.',
       features: [
-        'Modern Single Page Application (SPA)',
-        'Free .xyz or .info Domain (1 Year)',
-        'High-Speed Secure Hosting',
-        'Contact Form with Email Alerts',
-        'Social Media Integration',
-        'Mobile & Tablet Responsive',
-        'Delivery in 3 Days'
+        '.xyz / .site / .shop Domain',
+        'Fast Hosting (Mobile Responsive)',
+        'Medium Design & Basic SEO',
+        'Admin Panel v1',
+        'SSL Certificate & Security',
+        'Custom Theme & Font (Basic)',
+        '2 Times Revision'
       ],
-      buttonText: 'Launch Personal Brand',
+      buttonText: 'Start Basic',
       highlighted: false
     },
     {
-      id: 'business',
-      name: 'Business / Corporate',
-      price: '৳18,500',
-      numericPrice: 18500,
-      description: 'Complete digital presence for small businesses and agencies with content control.',
+      id: 'standard',
+      name: 'STANDARD PACKAGE',
+      price: '৳1,500',
+      numericPrice: 1500,
+      description: 'Perfect for Growing Businesses.',
       features: [
-        '5-8 Page Dynamic Website',
-        'Free .com Domain (1 Year)',
-        'Admin Panel (CMS) to Edit Content',
-        'SEO Optimization (Google Ranking)',
-        'WhatsApp Chat Widget',
-        'Google Maps & Analytics Setup',
-        '3 Months Free Maintenance'
+        'Free .com Domain',
+        'Premium UI Design',
+        'Admin Panel v2 + Blog System',
+        'AI Chat Support Widget',
+        'Course / Digital Asset System',
+        'Advanced SEO & Google Rank',
+        '4 Times Revision'
       ],
-      buttonText: 'Grow Your Business',
+      buttonText: 'Go Standard',
       highlighted: true
     },
     {
-      id: 'ecommerce',
-      name: 'E-Commerce / Custom',
-      price: '৳45,000+',
-      numericPrice: 45000,
-      description: 'Full-featured online store or custom software for high-scale operations.',
+      id: 'premium',
+      name: 'PREMIUM PACKAGE',
+      price: '৳3,000',
+      numericPrice: 3000,
+      description: 'Professional & High-Performance.',
       features: [
-        'Unlimited Products & Categories',
-        'User Login, Cart & Wishlist',
-        'bKash/Nagad/Card Payment Gateway',
-        'Inventory & Order Management System',
-        'SMS Notification Integration',
-        'High Performance Database',
-        '6 Months Priority Support'
+        '3–5 Page Premium UI/UX',
+        'SSD NVMe Hosting (Super Fast)',
+        'Admin Panel v3 (Advanced)',
+        'Payment Gateway Setup',
+        'AI Chatbot + Auto Reply',
+        'Google Business Setup',
+        'Unlimited Revision (Fair Use)'
       ],
-      buttonText: 'Start Selling Online',
+      buttonText: 'Go Premium',
       highlighted: false
+    },
+    {
+      id: 'ultimate',
+      name: 'ULTIMATE PACKAGE',
+      price: '৳5,000',
+      numericPrice: 5000,
+      description: 'Full Business + Automation + AI Powered.',
+      features: [
+        'Pro-Level UI/UX + Branding',
+        'Enterprise Security & VIP Hosting',
+        'Admin Panel v4 (Dashboard)',
+        'CRM, Leads & Email Automation',
+        'Payment (bKash, Nagad, Stripe)',
+        'Full SEO (On page + Technical)',
+        'Multi-User Admin Roles'
+      ],
+      buttonText: 'Get Ultimate',
+      highlighted: true
     }
   ];
 
